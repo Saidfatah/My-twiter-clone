@@ -122,14 +122,14 @@ const ProfileModal = ({ open, setOpen, user, expandable }) => {
               user.avatar === null ? (
                 <UserOutlined />
               ) : (
-                <img src={user.avatar} />
+                <img src={user.avatar} alt="alt" />
               )
             }
           />
           <p className="joined">
             Joined <Moment fromNow>{user.createdAt}</Moment>
           </p>
-          <p style={{ marginTop: "2%" }}>Bio feature in development 🎉 </p>
+          <p style={{ marginTop: "2%" }}>Bio feature in development <span role="img" >🎉</span> </p>
         </div>
         <div className="feed">
           {posts.length <= 0 ? (

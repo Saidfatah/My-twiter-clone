@@ -179,7 +179,7 @@ const Tweet = ({
          setData(res.data);
   
           for (let i = 0; i < tweet.likedBy.length; i++) {
-            if (tweet.likedBy[i]._id == profile.account) {
+            if (tweet.likedBy[i]._id === profile.account) {
               setLiked(true);
               break;
             }
@@ -206,7 +206,7 @@ const Tweet = ({
     mounted && setContent(handleRetweetText(tweet.content));
 
     return ()=>mounted=false
-  }, []);
+  }, [profile.account, tweet._id, tweet.content, tweet.likedBy, tweet.postedBy]);
 
   const handleLike = () => {
     if (liked) {
@@ -372,8 +372,9 @@ const Tweet = ({
         <Avatar
           size={64}
           style={{ minWidth: "64px" }}
+          alt="alt"
           icon={
-            data.avatar !== null ? <img src={data.avatar} /> : <UserOutlined />
+            data.avatar !== null ? <img src={data.avatar} alt="alt" /> : <UserOutlined />
           }
         />
         <div className="tweet-top-container">

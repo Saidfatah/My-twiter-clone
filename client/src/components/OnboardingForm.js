@@ -121,13 +121,9 @@ const SwitchDiv = styled.div`
 `;
 
 const OnboardingForm = (props) => {
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
   const {
     addToast,
-    removeToast,
-    removeAllToasts,
-    updateToast,
-    toastStack,
   } = useToasts();
   const history = useHistory();
 

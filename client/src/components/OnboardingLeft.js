@@ -10,10 +10,6 @@ import { useToasts } from "react-toast-notifications";
 const OnboardingLeft = () => {
   const {
     addToast,
-    removeToast,
-    removeAllToasts,
-    updateToast,
-    toastStack,
   } = useToasts();
 
   useEffect(() => {

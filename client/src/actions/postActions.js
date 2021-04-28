@@ -6,7 +6,7 @@ const API_URL="http://localhost:8080/api"
 
 export const likePost = (postId, userId) =>async (dispatch) => {
     try {
-      const likePosetRespone= await Axios.post(`${API_URL}/posts/like/${postId}`,{userId: userId})
+       await Axios.post(`${API_URL}/posts/like/${postId}`,{userId: userId})
       dispatch({ type: LIKE_POST })
 
       const posts = await Axios.get(`${API_URL}/posts/all`)
@@ -18,7 +18,7 @@ export const likePost = (postId, userId) =>async (dispatch) => {
 
 export const unlikePost = (postId, userId) =>async (dispatch) => {
    try {
-      const unlikePosetRespone=await Axios.post(`${API_URL}/posts/unlike/${postId}`,{userId: userId})
+      await Axios.post(`${API_URL}/posts/unlike/${postId}`,{userId: userId})
       dispatch({ type: UNLIKE_POST })
 
       const posts = await Axios.get(`${API_URL}/posts/all`)
@@ -30,7 +30,7 @@ export const unlikePost = (postId, userId) =>async (dispatch) => {
 
 export const deletePost = (postId) => async (dispatch) => {
     try {
-       const deletRes= await Axios.delete( `${API_URL}/posts/${postId}` )
+        await Axios.delete( `${API_URL}/posts/${postId}` )
        const posts = await Axios.get(`${API_URL}/posts/all`)
        dispatch({ type: FETCH_POSTS, payload: posts.data });
     } catch (error) {

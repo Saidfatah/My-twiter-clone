@@ -71,7 +71,7 @@ const Profile = ({ profile }) => {
     });
 
     return ()=>mounted = false
-  }, []);
+  }, [profile.account]);
 
   return (
     <Container>
@@ -90,7 +90,7 @@ const Profile = ({ profile }) => {
             profile.avatar === null ? (
               <UserOutlined />
             ) : (
-              <img src={profile.avatar} />
+              <img src={profile.avatar} al="alt" />
             )
           }
         />
@@ -99,7 +99,7 @@ const Profile = ({ profile }) => {
         <p className="joined">
           Joined <Moment fromNow>{profile.createdAt}</Moment>
         </p>
-        <p style={{ marginTop: "2%" }}>Bio feature in development 🎉 </p>
+        <p style={{ marginTop: "2%" }}>Bio feature in development <span role="img" >🎉</span> </p>
       </div>
       <div className="feed">
         {posts.length <= 0 ? (

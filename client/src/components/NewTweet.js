@@ -72,11 +72,7 @@ const Container = styled.form`
   }
 `;
 
-const Error = styled.p`
-  color: #f32013;
-  margin-top: 3%;
-  margin-bottom: 3%;
-`;
+
 
 const NewTweet = ({ profile, createPost }) => {
   const [content, setContent] = useState("");
@@ -123,7 +119,7 @@ const NewTweet = ({ profile, createPost }) => {
         <Avatar
           size={64}
           icon={
-            !profile.avatar ? <UserOutlined /> : <img src={profile.avatar} />
+            !profile.avatar ? <UserOutlined /> : <img src={profile.avatar} alt="alt" />
           }
         />
         <Input.TextArea
@@ -138,6 +134,7 @@ const NewTweet = ({ profile, createPost }) => {
       <img
         style={{ borderRadius: "10px", marginTop: "5%", width: "100%" }}
         src={image}
+        alt="alt"
       />
       <div
         style={{

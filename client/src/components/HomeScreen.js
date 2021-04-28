@@ -10,7 +10,6 @@ import { useHistory, Link } from "react-router-dom";
 import { logout } from "../actions/authActions";
 import crowLogo from "../images/crowLogo.png";
 import {
-  RedoOutlined,
   HomeOutlined,
   BellOutlined,
   UserOutlined,

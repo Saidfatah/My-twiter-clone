@@ -151,7 +151,7 @@ const PostModal = ({ tweet, open, setOpen, profile }) => {
         <p>
           <Moment fromNow>{c.createdAt}</Moment>
         </p>
-        {c.postedBy == profile.username && (
+        {c.postedBy === profile.username && (
           <Tooltip placement="right" title="Delete Comment" trigger="hover">
             <DeleteOutlined
               onClick={() => handleDelete(c)}
@@ -279,7 +279,7 @@ const PostModal = ({ tweet, open, setOpen, profile }) => {
                   !profile.avatar ? (
                     <UserOutlined />
                   ) : (
-                    <img src={profile.avatar} />
+                    <img src={profile.avatar} alt="alt" />
                   )
                 }
               />
@@ -347,7 +347,7 @@ const PostModal = ({ tweet, open, setOpen, profile }) => {
                   !profile.avatar ? (
                     <UserOutlined />
                   ) : (
-                    <img src={profile.avatar} />
+                    <img src={profile.avatar}  alt="alt"  />
                   )
                 }
               />

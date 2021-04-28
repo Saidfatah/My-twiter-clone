@@ -27,22 +27,14 @@ const NewUserModal = ({
   newProfile,
   user,
   loading,
-  setToast,
   handleModal,
   error,
 }) => {
-  const history = useHistory();
-  const { register, handleSubmit, watch, errors } = useForm();
-  const {
-    addToast,
-    removeToast,
-    removeAllToasts,
-    updateToast,
-    toastStack,
-  } = useToasts();
+  const { register, handleSubmit, errors } = useForm();
+
 
   const [image, setImage] = useState(null);
-  const [imageLoading, setImageLoading] = useState(false);
+  // const [imageLoading, setImageLoading] = useState(false);
 
   const onSubmit = async (data) => {
     const profile = {
@@ -63,14 +55,14 @@ const NewUserModal = ({
     data.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
     data.append("api_key", API_KEY);
     data.append("timestamp", Date.now());
-    setImageLoading(true);
+    // setImageLoading(true);
     const res = await Axios.post(
       CLOUDINARY_URL,
       data
     );
 
     setImage(res.data.url);
-    setImageLoading(false);
+    // setImageLoading(false);
   };
 
   return (
@@ -100,7 +92,7 @@ const NewUserModal = ({
               <Error>{error}</Error>
               <Avatar
                 size={96}
-                icon={image == null ? <UserOutlined /> : <img src={image} />}
+                icon={image === null ? <UserOutlined /> : <img src={image} alt="alt" />}
                 style={{ marginBottom: "2%", marginTop: "2%" }}
               />
               <FileUpload>

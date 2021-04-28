@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Empty, Card, Statistic } from "antd";
 import { ArrowUpOutlined } from "@ant-design/icons";
 import Axios from "axios";
-import NumberFormat from "react-number-format";
 
 const Container = styled.div`
   display: flex;
@@ -65,7 +64,7 @@ const Activity = ({ profile }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [profile.account]);
 
   const calcLikes = (data) => {
     let count = 0;
