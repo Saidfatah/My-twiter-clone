@@ -130,7 +130,7 @@ const NewsFeed = () => {
       </div>
       <div>
         <a href="https://saidfatah.com" target="_blank" rel="noopener noreferrer">
-          Our Creator <span role="img" >👑</span>{" "}
+          Our Creator <span role="img" aria-label="emojii" >👑</span>{" "}
         </a>
         <p style={{ marginTop: "5%" }}>© 2020 Tweeter, Inc.</p>
       </div>

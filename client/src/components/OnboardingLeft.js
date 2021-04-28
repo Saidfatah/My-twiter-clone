@@ -14,7 +14,7 @@ const OnboardingLeft = () => {
 
   useEffect(() => {
     setToast();
-  }, []);
+  });
 
   const setToast = () => {
     addToast(

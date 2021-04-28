@@ -90,7 +90,7 @@ const Profile = ({ profile }) => {
             profile.avatar === null ? (
               <UserOutlined />
             ) : (
-              <img src={profile.avatar} al="alt" />
+              <img src={profile.avatar} alt="this is maageg" />
             )
           }
         />
@@ -99,7 +99,7 @@ const Profile = ({ profile }) => {
         <p className="joined">
           Joined <Moment fromNow>{profile.createdAt}</Moment>
         </p>
-        <p style={{ marginTop: "2%" }}>Bio feature in development <span role="img" >🎉</span> </p>
+        <p style={{ marginTop: "2%" }}>Bio feature in development <span role="img" aria-label="emojii">🎉</span> </p>
       </div>
       <div className="feed">
         {posts.length <= 0 ? (

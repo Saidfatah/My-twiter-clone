@@ -356,6 +356,7 @@ const Tweet = ({
     if(!tweet.image) return null
     return <img
         src={tweet.image}
+        alt="alt hh"
         style={{
           maxWidth: "100%",
           height: "350px",

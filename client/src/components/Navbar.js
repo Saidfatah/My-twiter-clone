@@ -115,7 +115,7 @@ const Navbar = ({ profile, logout, setActivePage }) => {
           <Avatar
             size={64}
             icon={
-              !profile.avatar ? <UserOutlined /> : <img src={profile.avatar} alt="image" />
+              !profile.avatar ? <UserOutlined /> : <img src={profile.avatar} alt="alt gdmn it" />
             }
           />
         </Badge>

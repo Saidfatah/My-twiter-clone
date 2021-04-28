@@ -8,8 +8,6 @@ import { FileUpload, FormDiv ,Form} from "./Styled/NewUserModalStyled";
 import OverflowScroll from "./Styled/OverflowScroll";
 import { connect } from "react-redux";
 import { newProfile } from "../actions/authActions";
-import { useHistory } from "react-router-dom";
-import { useToasts } from "react-toast-notifications";
 
 const API_KEY = "985455412721885";
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/twittercloneapi/image/upload';

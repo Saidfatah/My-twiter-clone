@@ -129,7 +129,9 @@ const ProfileModal = ({ open, setOpen, user, expandable }) => {
           <p className="joined">
             Joined <Moment fromNow>{user.createdAt}</Moment>
           </p>
-          <p style={{ marginTop: "2%" }}>Bio feature in development <span role="img" >🎉</span> </p>
+          <p style={{ marginTop: "2%" }}>Bio feature in development 
+          <span role="img"  aria-label="party" >🎉</span> 
+          </p>
         </div>
         <div className="feed">
           {posts.length <= 0 ? (
