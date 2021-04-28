@@ -23,6 +23,7 @@ mongoose.connect(
   }
 ).catch(err=>console.log(err));
 
+app.get('/', (req, res) => { res.send('Hello from Express!')})
 const authRoutes = require("./routes/authRoutes");
 app.use("/api/user", authRoutes);
 
