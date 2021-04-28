@@ -8,6 +8,8 @@ import { UserOutlined } from "@ant-design/icons";
 import Moment from "react-moment";
 import Axios from "axios";
 
+const API_URL="http://localhost:8080/api"
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -57,15 +59,18 @@ const Profile = ({ profile }) => {
   };
 
   useEffect(() => {
+    let mounted =true 
     Axios.get(
-      `https://tweeter-app-api.herokuapp.com/api/posts/${profile.account}`
+      `${API_URL}/posts/${profile.account}`
     )
-      .then((res) => {
-        setPosts(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    .then((res) => {
+      mounted && setPosts(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+    return ()=>mounted = false
   }, []);
 
   return (

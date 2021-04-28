@@ -4,6 +4,7 @@ import { Avatar, Tooltip, Badge } from "antd";
 import {
   UserOutlined,
   HeartOutlined,
+  HeartFilled,
   DeleteOutlined,
   RetweetOutlined,
   CommentOutlined,
@@ -19,6 +20,8 @@ import {
 } from "../actions/postActions";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+const API_URL="http://localhost:8080/api"
+
 
 const Container = styled.div`
   width: 100%;
@@ -77,6 +80,9 @@ const Container = styled.div`
 
   && .tweet-links {
     margin-top: 2%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center
   }
 
   && .tweet-icon {
@@ -164,37 +170,42 @@ const Tweet = ({
   const [commentCount, setCommentCount] = useState(0);
 
   useEffect(() => {
+    let mounted = true
     Axios.get(
-      `https://tweeter-app-api.herokuapp.com/api/user/postprofile/${tweet.postedBy}`
+      `${API_URL}/user/postprofile/${tweet.postedBy}`
     )
-      .then((res) => {
-        setData(res.data);
-
-        for (let i = 0; i < tweet.likedBy.length; i++) {
-          if (tweet.likedBy[i]._id == profile.account) {
-            setLiked(true);
-            break;
+    .then((res) => {
+       if(mounted){
+         setData(res.data);
+  
+          for (let i = 0; i < tweet.likedBy.length; i++) {
+            if (tweet.likedBy[i]._id == profile.account) {
+              setLiked(true);
+              break;
+            }
           }
-        }
-        if (tweet.postedBy === profile.account) {
-          setOwned(true);
-        } else {
-          setOwned(false);
-        }
-        Axios.get(
-          `https://tweeter-app-api.herokuapp.com/api/posts/${tweet._id}/comments`
-        )
-          .then((res) => {
-            setCommentCount(res.data.length);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
+          if (tweet.postedBy === profile.account) {
+            setOwned(true);
+          } else {
+            setOwned(false);
+          }
+          Axios.get(
+            `${API_URL}/posts/${tweet._id}/comments`
+          )
+         .then((res) => {
+              setCommentCount(res.data.length);
+         })
+         .catch((err) => {
+              console.log(err);
+         });
+       }
+    })
+    .catch((err) => {
         console.log(err);
-      });
-    setContent(handleRetweetText(tweet.content));
+    });
+    mounted && setContent(handleRetweetText(tweet.content));
+
+    return ()=>mounted=false
   }, []);
 
   const handleLike = () => {
@@ -246,6 +257,115 @@ const Tweet = ({
     );
   }
 
+
+  const TweetLinks=()=>{
+       
+       const Likes=()=>{
+         return  <div className="tweet-link">
+         {
+         owned 
+         ?null 
+         :!liked
+            ? <HeartOutlined
+                className="tweet-icon"
+                onClick={handleLike}
+                disabled={liked}
+                style={{ color:"gray"}}
+              />
+            : <HeartFilled
+                className="tweet-icon"
+                onClick={handleLike}
+                disabled={liked}
+                style={{ color: "red"}}
+              />
+          }
+         {serverLikes}
+       </div>
+       }
+       const DeletPost=()=>{
+          if(!owned) return null
+          return  <div className="tweet-link">
+            <Tooltip
+              placement="right"
+              title="Delete Post"
+              trigger="hover"
+            >
+              <DeleteOutlined
+                style={{
+                  marginTop: "2%",
+                  fontSize: "1.5rem",
+                }}
+                className="tweet-delete"
+                onClick={handleDelete}
+              />
+            </Tooltip>
+        </div>
+       }
+       const RetweetPost=()=>{
+          if(owned) return null
+          return  <div className="retweet-link">
+            <Tooltip
+              placement="right"
+              title="Retweet Post"
+              trigger="hover"
+            >
+              <RetweetOutlined
+                style={{
+                  marginTop: "2%",
+                  fontSize: "1.5rem",
+                }}
+                className="retweet"
+                onClick={handleRetweet}
+              />
+            </Tooltip>
+        </div>
+       }
+       const ReplyPost=()=>{
+          if(!expandable) return null
+          return <div className="tweet-link">
+              <Badge
+                count={commentCount}
+                style={{
+                  backgroundColor: "#fff",
+                  color: "#999",
+                  boxShadow: "0 0 0 1px #d9d9d9 inset",
+                }}
+              >
+                <Tooltip placement="right" title="Comment" trigger="hover">
+                  <CommentOutlined
+                    style={{
+                      marginTop: "2%",
+                      fontSize: "1.5rem",
+                    }}
+                    className="comment"
+                    onClick={() => handleComment(tweet)}
+                  />
+                </Tooltip>
+              </Badge>
+          </div>
+       }
+       return <div className="tweet-links" >
+       <Likes />
+       <DeletPost />
+       <RetweetPost />
+       <ReplyPost />
+     </div>
+  }
+
+  const TweetImage=()=>{
+    if(!tweet.image) return null
+    return <img
+        src={tweet.image}
+        style={{
+          maxWidth: "100%",
+          height: "350px",
+          background: "black",
+          objectFit: "contain",
+          borderRadius: "11px",
+          marginTop: "1%",
+        }}
+    />
+  }
   return (
     <Container>
       <div style={{ display: "flex", alignItems: "flex-start" }}>
@@ -269,100 +389,9 @@ const Tweet = ({
               {mention.length > 1 && <span className="mention">{mention}</span>}
               {content}
             </p>
-            {tweet.image && (
-              <img
-                src={tweet.image}
-                style={{
-                  maxWidth: "50%",
-                  height: "350px",
-                  background: "black",
-                  objectFit: "contain",
-                  borderRadius: "11px",
-                  marginTop: "1%",
-                }}
-              />
-            )}
-            <div className="tweet-links">
-              <div className="tweet-link">
-                {owned ? null : (
-                  <HeartOutlined
-                    className="tweet-icon"
-                    onClick={handleLike}
-                    disabled={liked}
-                    style={{ color: liked && "gray", opacity: liked && 0.5 }}
-                  />
-                )}
-                {owned
-                  ? serverLikes === 1
-                    ? `${serverLikes} like`
-                    : `${serverLikes} likes`
-                  : `${serverLikes}`}
-                {liked && (
-                  <p style={{ color: "gray", marginLeft: "2%" }}>
-                    You liked this.
-                  </p>
-                )}
-              </div>
-              <div className="tweet-link">
-                {owned && (
-                  <Tooltip
-                    placement="right"
-                    title="Delete Post"
-                    trigger="hover"
-                  >
-                    <DeleteOutlined
-                      style={{
-                        marginTop: "2%",
-                        fontSize: "1.5rem",
-                      }}
-                      className="tweet-delete"
-                      onClick={handleDelete}
-                    />
-                  </Tooltip>
-                )}
-              </div>
-              <div className="retweet-link">
-                {!owned && (
-                  <Tooltip
-                    placement="right"
-                    title="Retweet Post"
-                    trigger="hover"
-                  >
-                    <RetweetOutlined
-                      style={{
-                        marginTop: "2%",
-                        fontSize: "1.5rem",
-                      }}
-                      className="retweet"
-                      onClick={handleRetweet}
-                    />
-                  </Tooltip>
-                )}
-              </div>
-              {expandable && (
-                <div className="tweet-link">
-                  <Badge
-                    count={commentCount}
-                    style={{
-                      backgroundColor: "#fff",
-                      color: "#999",
-                      boxShadow: "0 0 0 1px #d9d9d9 inset",
-                    }}
-                  >
-                    <Tooltip placement="right" title="Comment" trigger="hover">
-                      <CommentOutlined
-                        style={{
-                          marginTop: "2%",
-                          fontSize: "1.5rem",
-                        }}
-                        className="comment"
-                        onClick={() => handleComment(tweet)}
-                      />
-                    </Tooltip>
-                  </Badge>
-                </div>
-              )}
-            </div>
+            
+            <TweetImage />
+            <TweetLinks />
           </div>
         </div>
       </div>

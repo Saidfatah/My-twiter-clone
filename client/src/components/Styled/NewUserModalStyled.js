@@ -1,10 +1,14 @@
 import styled from "styled-components";
 
+export const Form = styled.form`
+   width:100%;
+   height: 100%;
+`;
 export const FormDiv = styled.div`
   display: flex;
-  height: 100%;
+  height: fit-content;
   flex-direction: column;
-
+  
   margin: 0 auto;
   && h3 {
     font-size: 1.2rem;

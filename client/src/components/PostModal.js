@@ -135,7 +135,6 @@ const Container = styled.div`
 const PostModal = ({ tweet, open, setOpen, profile }) => {
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState("");
-  const [owned, setOwned] = useState(false);
 
   const mapComments = () => {
     return comments.map((c) => (

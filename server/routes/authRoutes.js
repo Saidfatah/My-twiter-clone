@@ -7,8 +7,10 @@ const Profile = require("../models/Profile");
 router.post("/register", async (req, res) => {
   const emailExists = await User.findOne({ email: req.body.email });
   if (emailExists) {
+    console.log({emailExists})
     return res.status(400).send("Email already in use.");
   }
+  console.log("create user")
 
   const salt = await bcrypt.genSalt(10);
 

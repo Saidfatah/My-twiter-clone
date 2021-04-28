@@ -7,6 +7,8 @@ import Moment from "react-moment";
 import Tweet from "./Tweet";
 import Axios from "axios";
 
+
+const API_URL="http://localhost:8080/api"
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -55,17 +57,20 @@ const ProfileModal = ({ open, setOpen, user, expandable }) => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
+    let mounted= true
     if (user !== null) {
       Axios.get(
-        `https://tweeter-app-api.herokuapp.com/api/posts/${user.account}`
+        `${API_URL}/posts/${user.account}`
       )
         .then((res) => {
-          setPosts(res.data);
+          mounted && setPosts(res.data);
         })
         .catch((err) => {
           console.log(err);
         });
     }
+
+    return ()=>mounted=false
   }, [user]);
 
   const mapPosts = () => {

@@ -2,79 +2,50 @@ import Axios from "axios";
 import { LIKE_POST, FETCH_POSTS, UNLIKE_POST, POST_OK } from "./types";
 import jwt from "jsonwebtoken";
 
-export const likePost = (postId, userId) => (dispatch) => {
-  Axios.post(`https://tweeter-app-api.herokuapp.com/api/posts/like/${postId}`, {
-    userId: userId,
-  })
-    .then((res) => {
-      dispatch({ type: LIKE_POST });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  Axios.get("https://tweeter-app-api.herokuapp.com/api/posts/all")
-    .then((res) => {
-      dispatch({ type: FETCH_POSTS, payload: res.data });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+const API_URL="http://localhost:8080/api"
+
+export const likePost = (postId, userId) =>async (dispatch) => {
+    try {
+      const likePosetRespone= await Axios.post(`${API_URL}/posts/like/${postId}`,{userId: userId})
+      dispatch({ type: LIKE_POST })
+
+      const posts = await Axios.get(`${API_URL}/posts/all`)
+      dispatch({ type: FETCH_POSTS, payload: posts.data });
+    } catch (error) {
+      console.log(error)
+    }
 };
 
-export const unlikePost = (postId, userId) => (dispatch) => {
-  Axios.post(
-    `https://tweeter-app-api.herokuapp.com/api/posts/unlike/${postId}`,
-    {
-      userId: userId,
-    }
-  )
-    .then((res) => {
-      dispatch({ type: UNLIKE_POST });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  Axios.get("https://tweeter-app-api.herokuapp.com/api/posts/all")
-    .then((res) => {
-      dispatch({ type: FETCH_POSTS, payload: res.data });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+export const unlikePost = (postId, userId) =>async (dispatch) => {
+   try {
+      const unlikePosetRespone=await Axios.post(`${API_URL}/posts/unlike/${postId}`,{userId: userId})
+      dispatch({ type: UNLIKE_POST })
+
+      const posts = await Axios.get(`${API_URL}/posts/all`)
+      dispatch({ type: FETCH_POSTS, payload: posts.data });
+   } catch (error) {
+     console.log(error)
+   }
 };
 
 export const deletePost = (postId) => async (dispatch) => {
-  await Axios.delete(
-    `https://tweeter-app-api.herokuapp.com/api/posts/${postId}`
-  )
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  Axios.get("https://tweeter-app-api.herokuapp.com/api/posts/all")
-    .then((res) => {
-      dispatch({ type: FETCH_POSTS, payload: res.data });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    try {
+       const deletRes= await Axios.delete( `${API_URL}/posts/${postId}` )
+       const posts = await Axios.get(`${API_URL}/posts/all`)
+       dispatch({ type: FETCH_POSTS, payload: posts.data });
+    } catch (error) {
+       console.log(error)
+    }
 };
 
 export const retweet = (postValues) => async (dispatch) => {
-  const token = localStorage.getItem("token");
-  let userId = await jwt.decode(token);
-
-  return Axios.post(
-    `https://tweeter-app-api.herokuapp.com/api/posts/new/${userId._id}`,
-    postValues
-  )
-    .then(async (res) => {
+    try {
+      const token = localStorage.getItem("token");
+      let userId = await jwt.decode(token);
+      const res=await  Axios.post(`${API_URL}/posts/new/${userId._id}`,postValues)
       await dispatch({ type: POST_OK, payload: res.data });
       return "OK";
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    } catch (error) {
+      console.log(error)
+    }
 };

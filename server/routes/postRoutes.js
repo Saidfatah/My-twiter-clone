@@ -4,6 +4,7 @@ const Profile = require("../models/Profile");
 const Comment = require("../models/Comment");
 
 router.get("/all", async (req, res) => {
+  console.log("is called")
   const allPosts = await Post.find();
   const sorted = await allPosts
     .slice()

@@ -69,16 +69,18 @@ const NewsFeed = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    let mounted = true
     if (window.innerWidth > 1050) {
       Axios.get(`https://gnews.io/api/v3/top-news?token=${API_KEY}&max=10`)
         .then((res) => {
-          setData(res.data.articles);
+          mounted && setData(res.data.articles);
         })
         .catch((err) => {
-          setData([]);
-          setError(err.response.message);
+          mounted && setData([]);
+          mounted && setError(err.response.message);
         });
     }
+    return ()=>mounted=false
   }, []);
 
   if (data === null) {
@@ -99,6 +101,7 @@ const NewsFeed = () => {
     );
   }
 
+  console.log(data[0])
   return (
     <Container>
       <div className="top-news">
@@ -112,9 +115,9 @@ const NewsFeed = () => {
             height: "100%",
           }}
         >
-          {data.map((article) => (
-            <div className="article">
-              <a href={article.url} target="_blank">
+          {data.map((article,index) => (
+            <div key={index+article.url} className="article">
+              <a href={article.url} target="_blank" rel="noopener noreferrer">
                 <p>{article.source.name}</p>
                 <p>
                   Published <Moment fromNow>{article.publishedAt}</Moment>
@@ -126,7 +129,7 @@ const NewsFeed = () => {
         </div>
       </div>
       <div>
-        <a href="https://nathanielrichards.dev" target="_blank">
+        <a href="https://saidfatah.com" target="_blank">
           Our Creator 👑{" "}
         </a>
         <p style={{ marginTop: "5%" }}>© 2020 Tweeter, Inc.</p>

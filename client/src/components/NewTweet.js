@@ -12,7 +12,9 @@ import { FileUpload } from "./Styled/NewUserModalStyled";
 import { createPost } from "../actions/authActions";
 
 import Axios from "axios";
-const API_KEY = "827878474497588";
+const API_KEY = "985455412721885";
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/twittercloneapi/image/upload';
+const CLOUDINARY_UPLOAD_PRESET  = "zitbuf77";
 
 const Container = styled.form`
   width: 100%;
@@ -88,12 +90,12 @@ const NewTweet = ({ profile, createPost }) => {
     const files = e.target.files;
     const data = new FormData();
     data.append("file", files[0]);
-    data.append("upload_preset", "tweeter");
+    data.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
     data.append("api_key", API_KEY);
     data.append("timestamp", Date.now());
     setImageLoading(true);
     const res = await Axios.post(
-      "https://api.cloudinary.com/v1_1/tweeter/image/upload",
+      CLOUDINARY_URL,
       data
     );
 

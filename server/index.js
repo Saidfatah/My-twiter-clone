@@ -21,7 +21,7 @@ mongoose.connect(
   () => {
     console.log("Db Connected");
   }
-);
+).catch(err=>console.log(err));
 
 const authRoutes = require("./routes/authRoutes");
 app.use("/api/user", authRoutes);
