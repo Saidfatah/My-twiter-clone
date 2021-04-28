@@ -13,10 +13,6 @@ const OnboardingLeft = () => {
   } = useToasts();
 
   useEffect(() => {
-    setToast();
-  });
-
-  const setToast = () => {
     addToast(
       <p style={{ fontSize: "0.8rem" }}>
         By using Tweeter's services you agree to our Cookie Use and Data
@@ -26,8 +22,10 @@ const OnboardingLeft = () => {
       {
         appearance: "info",
       }
-    );
-  };
+    )
+  },[addToast]);
+
+ 
   return (
     <Container>
       <Perk>
