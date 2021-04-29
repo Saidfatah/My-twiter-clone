@@ -17,8 +17,8 @@ import {
 import axios from "axios";
 import jwt from "jsonwebtoken";
 
-const API_URL="http://localhost:8080/api"
-
+ 
+const API_URL=process.env.REACT_APP_API_URL
 
 export const registerUser = (formValues) =>async (dispatch) => {
   try {

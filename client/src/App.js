@@ -7,6 +7,7 @@ import PrivateRoute from "./helpers/PrivateRoute";
 import Home from "./pages/Home";
 
 function App() {
+  console.log(process.env)
   return (
     <Switch>
       <PublicRoute restricted={true} exact path="/" component={SignUp} />

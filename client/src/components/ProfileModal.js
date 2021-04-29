@@ -8,7 +8,7 @@ import Tweet from "./Tweet";
 import Axios from "axios";
 
 
-const API_URL="http://localhost:8080/api"
+ 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -55,6 +55,8 @@ const Container = styled.div`
 
 const ProfileModal = ({ open, setOpen, user, expandable }) => {
   const [posts, setPosts] = useState([]);
+
+  const API_URL=process.env.REACT_APP_API_URL
 
   useEffect(() => {
     let mounted= true

@@ -2,7 +2,8 @@ import Axios from "axios";
 import { LIKE_POST, FETCH_POSTS, UNLIKE_POST, POST_OK } from "./types";
 import jwt from "jsonwebtoken";
 
-const API_URL="http://localhost:8080/api"
+const API_URL=process.env.REACT_APP_API_URL
+
 
 export const likePost = (postId, userId) =>async (dispatch) => {
     try {

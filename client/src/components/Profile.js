@@ -8,8 +8,7 @@ import { UserOutlined } from "@ant-design/icons";
 import Moment from "react-moment";
 import Axios from "axios";
 
-const API_URL="http://localhost:8080/api"
-
+ 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -57,6 +56,8 @@ const Profile = ({ profile }) => {
   const mapPosts = () => {
     return posts.map((p) => <Tweet tweet={p} key={p._id} expandable={false} />);
   };
+
+  const API_URL=process.env.REACT_APP_API_URL
 
   useEffect(() => {
     let mounted =true 

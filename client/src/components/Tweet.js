@@ -20,7 +20,6 @@ import {
 } from "../actions/postActions";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-const API_URL="http://localhost:8080/api"
 
 
 const Container = styled.div`
@@ -168,6 +167,9 @@ const Tweet = ({
   const [mention, setMention] = useState("");
   const [content, setContent] = useState("");
   const [commentCount, setCommentCount] = useState(0);
+
+
+   const API_URL=process.env.REACT_APP_API_URL
 
   useEffect(() => {
     let mounted = true
