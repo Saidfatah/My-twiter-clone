@@ -73,7 +73,7 @@ const ProfileModal = ({ open, setOpen, user, expandable }) => {
     }
 
     return ()=>mounted=false
-  }, [user]);
+  }, [user,API_URL]);
 
   const mapPosts = () => {
     return posts.map((p) => (

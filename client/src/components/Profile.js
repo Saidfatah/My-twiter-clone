@@ -72,7 +72,7 @@ const Profile = ({ profile }) => {
     });
 
     return ()=>mounted = false
-  }, [profile.account]);
+  }, [profile.account,API_URL]);
 
   return (
     <Container>

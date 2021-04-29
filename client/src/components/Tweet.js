@@ -208,7 +208,7 @@ const Tweet = ({
     mounted && setContent(handleRetweetText(tweet.content));
 
     return ()=>mounted=false
-  }, [profile.account, tweet._id, tweet.content, tweet.likedBy, tweet.postedBy]);
+  }, [profile.account, tweet._id, tweet.content, tweet.likedBy, tweet.postedBy,API_URL]);
 
   const handleLike = () => {
     if (liked) {
